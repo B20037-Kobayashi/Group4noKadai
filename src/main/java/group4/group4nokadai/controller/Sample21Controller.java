@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class Sample21Controller {
 
-  @GetMapping("/sample21.html")
+  @GetMapping("/sample21")
   public String sample21() {
     return "sample21.html";
   }
@@ -28,6 +28,18 @@ public class Sample21Controller {
 
   }
 
+  /**
+   * クエリパラメータの引数2つを受け付ける URLでの?のあとのパラメータ名とjavaメソッドの引数名は同じであることが望ましい(別にする方法は一応ある)
+   * 引数をStringとして受け取ってparseIntする以外にもInteger(intのラッパークラス)クラスの変数として受け取ってそのまま加算する方法もある
+   *
+   * @param tasu1
+   * @param tasu2
+   * @param model
+   * @return
+   *
+   *         RequestParamアノテーションを指定すると、URLに含まれるクエリパラメータや、メッセージボディーに含まれるポストパラメータを受け取ることができます
+   */
+
   @GetMapping("/sample23")
   public String sample23(@RequestParam Integer tasu1, @RequestParam Integer tasu2, ModelMap model) {
     int tasuResult = tasu1 + tasu2;
@@ -36,6 +48,11 @@ public class Sample21Controller {
     // ここで値を登録するとthymeleafが受け取り，htmlで処理することができるようになる
     return "sample21.html";
 
+  }
+
+  @GetMapping("/sample24")
+  public String sample24() {
+    return "sample24.html";
   }
 
 }
