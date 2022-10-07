@@ -8,6 +8,22 @@
 
 <body>
   <h1>sample26.html</h1>
+  <p>
+  <form action="/sample27" method="post">
+    最小値：<input type="number" name="min">
+    最大値：<input type="number" name="max">
+    <input type="submit" value="計算"><input type="reset" value="リセット">
+  </form>
+
+  <div>
+    <span th:each="num:${sumRange}">
+      [[${num}]]
+    </span>
+  </div>
+  <div>
+    [[${sum}]]
+  </div>
+  </p>
 </body>
 
 </html>
