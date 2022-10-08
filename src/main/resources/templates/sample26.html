@@ -7,15 +7,41 @@
 </head>
 
 <body>
+  <!--
+        th:inline="javascript" と書くことで，javascriptコード中にthymeleafを利用して変数をJavaから受け取ることができるようになる
+        表示の際にはdocument.getElementByIdのようなDOM操作のAPIを利用し，値を表示する
+        今回の場合 #num_list というIDを利用して操作している
+      -->
+  <script th:inline="javascript" th:if=${score}>
+    window.onload = function () {
+      //score変数の内容を読み取る
+      var score = [[${ score }]];
+      //3つの数値を文字列として保持する変数
+      var num_list_txt = "";
+      for (let i = 0; i < 3; i++) {
+        num_list_txt = num_list_txt + score.numList[i] + ",";
+      }
+      num_list_txt = num_list_txt + "<br>平均は" + score.ave;
+      //DOM操作
+      document.getElementById("num_list").innerHTML = num_list_txt;
+      console.log(score);//ログ出力．ブラウザのコンソール画面に表示される
+    }
+  </script>
+
   <h1>sample26.html</h1>
+
   <p>
   <form action="/sample27" method="post">
     最小値：<input type="number" name="min">
     最大値：<input type="number" name="max">
     <input type="submit" value="計算"><input type="reset" value="リセット">
   </form>
-
   <div>
+    <!--
+      spanタグに意味は特になし．
+      th:eachは変数名：リスト名（テーブル名）で
+      リストの中身を順番に変数に入れる．
+    -->
     <span th:each="num:${sumRange}">
       [[${num}]]
     </span>
@@ -24,6 +50,26 @@
     [[${sum}]]
   </div>
   </p>
+
+  <p>
+    <!-- /sample26/ave にpostでアクセスするform-->
+  <form action="/sample26/ave" method="post">
+    <input type="number" name="num1" />
+    <input type="number" name="num2" />
+    <input type="number" name="num3" />
+    <input type="submit" value="計算">
+    <input type="reset" value="リセット">
+  </form>
+  </p>
+
+  <!--
+    変数scoreがnullでなければ表示
+  -->
+  <div th:if="${score}">
+    <span id="num_list">
+      ほげほげ
+    </span>
+  </div>
 </body>
 
 </html>
